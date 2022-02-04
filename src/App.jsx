@@ -11,6 +11,7 @@ import Home from './components/Home';
 import Admin from './components/Admin';
 import Categories from './components/Categories';
 import { useRouteMatch } from 'react-router';
+import OneMovie from './components/OneMovie';
 
 export default function App() {
   return (
@@ -43,9 +44,7 @@ export default function App() {
 
           <div className='col-md-10'>
             <Switch>
-              <Route path='/movies/:id'>
-                <Movie />
-              </Route>
+              <Route path='/movies/:id' component={OneMovie}></Route>
               <Route path='/movies'>
                 <Movies />
               </Route>
@@ -58,7 +57,7 @@ export default function App() {
                 render={(props) => (
                   <Categories {...props} title={`Drama`} />
                 )}></Route>
-                <Route
+              <Route
                 exact
                 path='/by-category/comedy'
                 render={(props) => (
@@ -76,12 +75,6 @@ export default function App() {
       </div>
     </Router>
   );
-}
-
-function Movie() {
-  let { id } = useParams();
-
-  return <h2>Movie id: {id}</h2>;
 }
 
 function CategoryPage() {
