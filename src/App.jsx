@@ -5,13 +5,13 @@ import {
   Route,
   Link,
   useParams,
-  
 } from 'react-router-dom';
 import Movies from './components/Movies';
 import Home from './components/Home';
 import Admin from './components/Admin';
-import Genres from './components/Genres'
+import Genres from './components/Genres';
 import OneMovie from './components/OneMovie';
+import OneGenre from './components/OneGenre';
 
 export default function App() {
   return (
@@ -51,6 +51,7 @@ export default function App() {
               <Route exact path='/genres'>
                 <Genres />
               </Route>
+              <Route path='/genre/:id' component={OneGenre}></Route>
               <Route path='/admin'>
                 <Admin />
               </Route>
