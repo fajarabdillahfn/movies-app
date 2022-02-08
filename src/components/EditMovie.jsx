@@ -225,8 +225,6 @@ export default class EditMovie extends Component {
 
             <button className='btn btn-primary'>Save</button>
           </form>
-
-          <pre>{JSON.stringify(this.state, null, 3)}</pre>
         </Fragment>
       );
     }
