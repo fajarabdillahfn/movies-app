@@ -4,6 +4,9 @@ import Input from './form-components/Input';
 import Select from './form-components/Select';
 import TextArea from './form-components/TextArea';
 import Alert from './ui-components/Alert';
+import { Link } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export default class EditMovie extends Component {
   constructor(props) {
@@ -150,6 +153,43 @@ export default class EditMovie extends Component {
     }
   }
 
+  confirmDelete = (e) => {
+    confirmAlert({
+      title: 'Delete Movie',
+      message: 'Are you sure?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            fetch(
+              'http://localhost:4000/v1/admin/deletemovie/' + this.state.movie.id,
+              { method: 'GET' }
+            )
+              .then((response) => response.json)
+              .then((data) => {
+                if (data.error) {
+                  this.setState({
+                    alert: {
+                      type: 'alert-danger',
+                      message: data.error.message,
+                    },
+                  });
+                } else {
+                  this.props.history.push({
+                    pathname: '/admin',
+                  });
+                }
+              });
+          },
+        },
+        {
+          label: 'No',
+          onClick: () => {},
+        },
+      ],
+    });
+  };
+
   render() {
     let { movie, isLoaded, error } = this.state;
 
@@ -247,6 +287,17 @@ export default class EditMovie extends Component {
             <hr />
 
             <button className='btn btn-primary'>Save</button>
+            <Link to='/admin' className='btn btn-warning ms-1'>
+              Cancel
+            </Link>
+            {movie.id > 0 && (
+              <a
+                href='#!'
+                onClick={() => this.confirmDelete()}
+                className='btn btn-danger ms-1'>
+                Delete
+              </a>
+            )}
           </form>
         </Fragment>
       );
