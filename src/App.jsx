@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Movies from './components/Movies';
-import Home from './components/Home';
 import Admin from './components/Admin';
-import Genres from './components/Genres';
+import Home from './components/Home';
 import OneMovie from './components/OneMovie';
+import Genres from './components/Genres';
 import OneGenre from './components/OneGenre';
 import EditMovie from './components/EditMovie';
 import Login from './components/Login';
@@ -65,7 +65,7 @@ export default class App extends Component {
                   {this.state.jwt !== '' && (
                     <Fragment>
                       <li className='list-group-item'>
-                        <Link to='/admin/movie/0'>Add Movie</Link>
+                        <Link to='/admin/movie/0'>Add movie</Link>
                       </li>
                       <li className='list-group-item'>
                         <Link to='/admin'>Manage Catalogue</Link>
@@ -73,32 +73,45 @@ export default class App extends Component {
                     </Fragment>
                   )}
                 </ul>
+                <pre>{JSON.stringify(this.state, null, 3)}</pre>
               </nav>
             </div>
 
             <div className='col-md-10'>
               <Switch>
-                <Route path='/movies/:id' component={OneMovie}></Route>
+                <Route path='/movies/:id' component={OneMovie} />
+
                 <Route path='/movies'>
                   <Movies />
                 </Route>
-                <Route path='/genre/:id' component={OneGenre}></Route>
+
+                <Route path='/genre/:id' component={OneGenre} />
 
                 <Route
                   exact
                   path='/login'
                   component={(props) => (
                     <Login {...props} handleJWTChange={this.handleJWTChange} />
-                  )}></Route>
+                  )}
+                />
 
                 <Route exact path='/genres'>
                   <Genres />
                 </Route>
 
-                <Route path='/admin/movie/:id' component={EditMovie}></Route>
-                <Route path='/admin'>
-                  <Admin />
-                </Route>
+                <Route
+                  path='/admin/movie/:id'
+                  component={(props) => (
+                    <EditMovie {...props} jwt={this.state.jwt} />
+                  )}
+                />
+
+                <Route
+                  path='/admin'
+                  component={(props) => (
+                    <Admin {...props} jwt={this.state.jwt} />
+                  )}
+                />
                 <Route path='/'>
                   <Home />
                 </Route>
