@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import Input from './form-components/Input';
 export default class GraphQL extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ export default class GraphQL extends Component {
       searchTerm: value,
     }));
 
-    this.performSearch()
+    this.performSearch();
   };
 
   performSearch() {
@@ -110,6 +111,8 @@ export default class GraphQL extends Component {
   }
 
   render() {
+    const { movies, searchTerm } = this.state
+
     return (
       <Fragment>
         <h2>GraphQL</h2>
@@ -119,23 +122,23 @@ export default class GraphQL extends Component {
           title={'Search'}
           type={'text'}
           name={'search'}
-          value={this.state.searchTerm}
+          value={searchTerm}
           handleChange={this.handleChange}
         />
 
         <div className='list-group'>
-          {this.state.movies.map((m) => (
-            <a
+          {movies.map((m) => (
+            <Link
               key={m.id}
               className='list-group-item list-group-item-action'
-              href='#!'>
+              to={`/moviesgraphql/${m.id}`}>
               <strong>{m.title}</strong>
               <small className='text-muted'>
                 ({m.year}) - {m.runtime} minutes
               </small>
               <br />
               {m.description.slice(0, 100)}...
-            </a>
+            </Link>
           ))}
         </div>
       </Fragment>
